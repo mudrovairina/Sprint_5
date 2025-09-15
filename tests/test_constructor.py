@@ -8,6 +8,15 @@ from urls import BASE_URL
 class TestConstructor:
     def test_go_to_section_buns(self, driver):
         driver.get(BASE_URL)
+        # Уходим в "Соусы", чтобы потом проверить переход обратно
+        driver.find_element(*ConstructorTabsLocators.SAUCES_TAB).click()
+        WebDriverWait(driver, 5).until(
+            EC.visibility_of_element_located(
+                ConstructorTabsLocators.SAUCES_HEADER
+            )
+        )
+        # Переходим в "Булки"
+        driver.find_element(*ConstructorTabsLocators.BUNS_TAB).click()
         buns_header = WebDriverWait(driver, 5).until(
             EC.visibility_of_element_located(
                 ConstructorTabsLocators.BUNS_HEADER
